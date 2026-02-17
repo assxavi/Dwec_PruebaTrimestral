@@ -1,0 +1,39 @@
+<h2>Nueva serie</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()" style="display:grid; gap:12px; max-width:420px;">
+  <label>
+    Title
+    <input type="text" formControlName="title" />
+  </label>
+  <div *ngIf="form.get('title')?.touched && form.get('title')?.invalid" style="color:crimson;">
+    Obligatorio y mínimo 3 caracteres.
+  </div>
+
+  <label>
+    Channel
+    <input type="text" formControlName="channel" />
+  </label>
+  <div *ngIf="form.get('channel')?.touched && form.get('channel')?.invalid" style="color:crimson;">
+    Obligatorio.
+  </div>
+
+  <label>
+    Rating (0-10)
+    <input type="number" formControlName="rating" min="0" max="10" step="0.1" />
+  </label>
+  <div *ngIf="form.get('rating')?.touched && form.get('rating')?.invalid" style="color:crimson;">
+    Obligatorio y entre 0 y 10.
+  </div>
+
+  <button type="submit" [disabled]="form.invalid || loading">
+    {{ loading ? 'Enviando...' : 'Crear' }}
+  </button>
+</form>
+
+<div *ngIf="createdId !== null" style="margin-top:16px; padding:10px; border:1px solid #ddd;">
+  ✅ Serie creada. ID devuelto: <strong>{{ createdId }}</strong>
+</div>
+
+<div *ngIf="error" style="margin-top:16px; color:crimson;">
+  {{ error }}
+</div>
